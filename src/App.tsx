@@ -42,13 +42,16 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    const loadPosts = async (userId: number) => {
+    if (selectedUser === null) {
+      return;
+    }
+
+    const loadPosts = async () => {
       try {
         setErrorMessage('');
         setSelectedPost(null);
         setLoadingPosts(true);
-
-        const posts = await apiPosts.getUserPosts(userId);
+        const posts = await apiPosts.getUserPosts(selectedUser.id);
 
         setUserPosts(posts);
       } catch {
@@ -58,11 +61,7 @@ export const App = () => {
       }
     };
 
-    if (selectedUser) {
-      loadPosts(selectedUser.id);
-    } else {
-      return;
-    }
+    loadPosts();
   }, [selectedUser]);
 
   const isPlugVisible =

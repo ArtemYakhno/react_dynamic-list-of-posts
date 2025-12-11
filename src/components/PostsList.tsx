@@ -14,7 +14,7 @@ export const PostsList: React.FC<Props> = ({
   onSelectedPost,
 }) => {
   const handleSelectPost = (post: Post) => {
-    if (selectedPost) {
+    if (selectedPost?.id === post.id) {
       onSelectedPost(null);
     } else {
       onSelectedPost(post);

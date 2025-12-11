@@ -66,6 +66,8 @@ const PostDetailsComponent: React.FC<Props> = ({ post }) => {
   const isPlugVisible =
     postComments.length === 0 && !loadingCommets && !errorMessage;
   const isCommentsVisible = postComments.length > 0 && !loadingCommets;
+  const isNewCommentButtonVisible =
+    !isFormVisible && !loadingCommets && !errorMessage;
 
   return (
     <div className="content" data-cy="PostDetails">
@@ -125,7 +127,7 @@ const PostDetailsComponent: React.FC<Props> = ({ post }) => {
               ))}
             </>
           )}
-          {!isFormVisible && (
+          {isNewCommentButtonVisible && (
             <button
               data-cy="WriteCommentButton"
               type="button"
