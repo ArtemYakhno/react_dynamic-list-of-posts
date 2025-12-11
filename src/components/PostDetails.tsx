@@ -34,14 +34,14 @@ const PostDetailsComponent: React.FC<Props> = ({ post }) => {
   };
 
   const deleteComment = async (commentId: number) => {
+    const prevComments = postComments;
+
     try {
-      setPostComments(prevComments => {
-        return prevComments.filter(comment => comment.id !== commentId);
-      });
+      setPostComments(prev => prev.filter(comment => comment.id !== commentId));
       await apiComments.deletePostComment(commentId);
-    } catch (error) {
-      setErrorMessage('Failed to delete comments from server');
-      setPostComments(postComments);
+    } catch {
+      setErrorMessage('Failed to delete comment from server');
+      setPostComments(prevComments);
     }
   };
 
@@ -61,6 +61,8 @@ const PostDetailsComponent: React.FC<Props> = ({ post }) => {
     };
 
     getPostCommentsFromServer();
+
+    return () => setIsFormVisible(false);
   }, [post]);
 
   const isPlugVisible =
@@ -138,7 +140,9 @@ const PostDetailsComponent: React.FC<Props> = ({ post }) => {
             </button>
           )}
         </div>
-        {isFormVisible && <NewCommentForm onSubmit={addComment} />}
+        {isFormVisible && (
+          <NewCommentForm key={post.id} onSubmit={addComment} />
+        )}
       </div>
     </div>
   );

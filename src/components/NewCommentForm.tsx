@@ -58,7 +58,13 @@ export const NewCommentForm: React.FC<Props> = ({ onSubmit }) => {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const newErrors = validate(values);
+    const trimmedValues = {
+      name: values.name.trim(),
+      email: values.email.trim(),
+      body: values.body.trim(),
+    };
+
+    const newErrors = validate(trimmedValues);
 
     setErrors(newErrors);
 
@@ -68,7 +74,7 @@ export const NewCommentForm: React.FC<Props> = ({ onSubmit }) => {
 
     try {
       setIsSubmited(true);
-      await onSubmit(values);
+      await onSubmit(trimmedValues);
       resetForm(false);
     } catch {
     } finally {
@@ -158,7 +164,7 @@ export const NewCommentForm: React.FC<Props> = ({ onSubmit }) => {
             </span>
           )}
         </div>
-        {errors.name && (
+        {errors.email && (
           <p className="help is-danger" data-cy="ErrorMessage">
             {errors.email}
           </p>
@@ -182,7 +188,7 @@ export const NewCommentForm: React.FC<Props> = ({ onSubmit }) => {
         </div>
         {errors.body && (
           <p className="help is-danger" data-cy="ErrorMessage">
-            Enter some text
+            {errors.body}
           </p>
         )}
       </div>
