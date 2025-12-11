@@ -73,77 +73,73 @@ const PostDetailsComponent: React.FC<Props> = ({ post }) => {
 
   return (
     <div className="content" data-cy="PostDetails">
-      <div className="content" data-cy="PostDetails">
-        <div className="block">
-          <h2 data-cy="PostTitle">
-            #{post.id}: {post.title}
-          </h2>
+      <div className="block">
+        <h2 data-cy="PostTitle">
+          #{post.id}: {post.title}
+        </h2>
 
-          <p data-cy="PostBody">{post.body}</p>
-        </div>
+        <p data-cy="PostBody">{post.body}</p>
+      </div>
 
-        <div className="block">
-          {loadingCommets && <Loader />}
+      <div className="block">
+        {loadingCommets && <Loader />}
 
-          {errorMessage && (
-            <div className="notification is-danger" data-cy="CommentsError">
-              {errorMessage}
-            </div>
-          )}
+        {errorMessage && (
+          <div className="notification is-danger" data-cy="CommentsError">
+            {errorMessage}
+          </div>
+        )}
 
-          {isPlugVisible && (
-            <p className="title is-4" data-cy="NoCommentsMessage">
-              No comments yet
-            </p>
-          )}
+        {isPlugVisible && (
+          <p className="title is-4" data-cy="NoCommentsMessage">
+            No comments yet
+          </p>
+        )}
 
-          {isCommentsVisible && (
-            <>
-              <p className="title is-4">Comments:</p>
+        {isCommentsVisible && (
+          <>
+            <p className="title is-4">Comments:</p>
 
-              {postComments.map(comment => (
-                <article
-                  key={comment.id}
-                  className="message is-small"
-                  data-cy="Comment"
-                >
-                  <div className="message-header">
-                    <a href={`mailto:${comment.email}`} data-cy="CommentAuthor">
-                      {comment.name}
-                    </a>
-                    <button
-                      data-cy="CommentDelete"
-                      type="button"
-                      className="delete is-small"
-                      aria-label="delete"
-                      onClick={() => deleteComment(comment.id)}
-                    >
-                      delete button
-                    </button>
-                  </div>
+            {postComments.map(comment => (
+              <article
+                key={comment.id}
+                className="message is-small"
+                data-cy="Comment"
+              >
+                <div className="message-header">
+                  <a href={`mailto:${comment.email}`} data-cy="CommentAuthor">
+                    {comment.name}
+                  </a>
+                  <button
+                    data-cy="CommentDelete"
+                    type="button"
+                    className="delete is-small"
+                    aria-label="delete"
+                    onClick={() => deleteComment(comment.id)}
+                  >
+                    delete button
+                  </button>
+                </div>
 
-                  <div className="message-body" data-cy="CommentBody">
-                    {comment.body}
-                  </div>
-                </article>
-              ))}
-            </>
-          )}
-          {isNewCommentButtonVisible && (
-            <button
-              data-cy="WriteCommentButton"
-              type="button"
-              className="button is-link"
-              onClick={() => setIsFormVisible(true)}
-            >
-              Write a comment
-            </button>
-          )}
-        </div>
-        {isFormVisible && (
-          <NewCommentForm key={post.id} onSubmit={addComment} />
+                <div className="message-body" data-cy="CommentBody">
+                  {comment.body}
+                </div>
+              </article>
+            ))}
+          </>
+        )}
+        {isNewCommentButtonVisible && (
+          <button
+            data-cy="WriteCommentButton"
+            type="button"
+            className="button is-link"
+            onClick={() => setIsFormVisible(true)}
+          >
+            Write a comment
+          </button>
         )}
       </div>
+      {isFormVisible && <NewCommentForm key={post.id} onSubmit={addComment} />}
     </div>
   );
 };

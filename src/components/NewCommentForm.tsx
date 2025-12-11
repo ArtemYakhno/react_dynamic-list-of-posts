@@ -40,7 +40,7 @@ function validate({ name, email, body }: FormValues): FormErrors {
 export const NewCommentForm: React.FC<Props> = ({ onSubmit }) => {
   const [values, setValues] = useState<FormValues>(defaultValues);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmited, setIsSubmited] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   function resetForm(isFullClear = true) {
     setErrors({});
@@ -73,12 +73,12 @@ export const NewCommentForm: React.FC<Props> = ({ onSubmit }) => {
     }
 
     try {
-      setIsSubmited(true);
+      setIsSubmitted(true);
       await onSubmit(trimmedValues);
       resetForm(false);
     } catch {
     } finally {
-      setIsSubmited(false);
+      setIsSubmitted(false);
     }
   }
 
@@ -196,10 +196,10 @@ export const NewCommentForm: React.FC<Props> = ({ onSubmit }) => {
       <div className="field is-grouped">
         <div className="control">
           <button
-            disabled={isSubmited}
+            disabled={isSubmitted}
             type="submit"
             className={classNames('button is-link', {
-              'is-loading': isSubmited,
+              'is-loading': isSubmitted,
             })}
           >
             Add
